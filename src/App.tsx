@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import "./App.css";
 import { PokemonDataType, generation1 } from "./assets/data/generation";
 import ComparePokemon from "./component/comparePokemon";
+import fetchPokemon from "./component/pokemonAPI";
+import PokemonData from "./component/pokemonData";
 
 function App() {
   // List of generations
@@ -36,6 +38,7 @@ function App() {
   const [type, setType] = useState<string>("Normal");
   const [filteredPokemon, setFilteredPokemon] = useState<PokemonDataType[]>([]);
   const [selectedPokemon, setSelectedPokemon] = useState("Pidgey");
+  const [pokemonData, setPokemonData] = useState<Object>("");
 
   // State variables to store the selected generation and type
   const [generation2, setGeneration2] = useState<string>("1");
@@ -44,6 +47,7 @@ function App() {
     []
   );
   const [selectedPokemon2, setSelectedPokemon2] = useState("Pidgey");
+  const [pokemonData2, setPokemonData2] = useState<Object>("");
 
   useEffect(() => {
     const filtered = filterPokemon(generation, type);
@@ -98,6 +102,21 @@ function App() {
     }
   };
 
+  async function comparePokemon() {
+    try {
+      const fetchPokemonData = await fetchPokemon(
+        selectedPokemon.toLocaleLowerCase()
+      );
+      const fetchPokemonData2 = await fetchPokemon(
+        selectedPokemon2.toLocaleLowerCase()
+      );
+
+      setPokemonData(fetchPokemonData);
+      setPokemonData2(fetchPokemonData2);
+    } catch (error) {
+      console.error(error);
+    }
+  }
   // <------------------------------------ Search ------------------------------------ >
 
   // const [searchTerm, setSearchTerm] = useState("");
@@ -162,11 +181,15 @@ function App() {
           />
           <button
             className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform bg-purple-500 p-4 text-2xl text-white hover:scale-105 hover:bg-purple-700 hover:text-pink-500"
-            // onClick={compareHandler}
+            onClick={comparePokemon}
           >
             Compare!
           </button>
         </div>
+      </div>
+      <div className="flex flex-row justify-evenly border-4 border-black">
+        <PokemonData number={1} pokemonData={pokemonData} />
+        <PokemonData number={2} pokemonData={pokemonData2} />
       </div>
     </div>
   );
