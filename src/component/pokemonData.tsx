@@ -186,7 +186,7 @@ export function PokemonCard({
             </div>
           </div>
         ) : (
-          <div className={`flex h-3/4 w-full flex-row justify-evenly`}>
+          <div className={`flex h-3/4 w-full flex-col justify-evenly`}>
             <div className="flex h-full w-full flex-row">
               <div className="md:h-full md:w-1/4">
                 <img
