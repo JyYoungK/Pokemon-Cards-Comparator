@@ -12,6 +12,7 @@ type ComparePokemonProps = {
   filteredPokemon: PokemonDataType[];
   selectedPokemon: string;
   setSelectedPokemon: React.Dispatch<React.SetStateAction<string>>;
+  setPokemonBaseData: React.Dispatch<React.SetStateAction<object>>;
 };
 
 function comparePokemon({
@@ -25,6 +26,7 @@ function comparePokemon({
   filteredPokemon,
   selectedPokemon,
   setSelectedPokemon,
+  setPokemonBaseData,
 }: ComparePokemonProps) {
   return (
     <div
@@ -62,11 +64,17 @@ function comparePokemon({
             <h1>Name</h1>
             <select
               value={selectedPokemon}
-              onChange={(event) => setSelectedPokemon(event.target.value)}
+              onChange={(event) => {
+                const chosenPokemon = filteredPokemon.find(
+                  (p) => p.name.english === event.target.value
+                );
+                if (chosenPokemon) setPokemonBaseData(chosenPokemon);
+                setSelectedPokemon(event.target.value);
+              }}
             >
               {filteredPokemon.map((p) => (
-                <option key={p.id} value={p.name}>
-                  {p.name}
+                <option key={p.id} value={p.name.english}>
+                  {p.name.english}
                 </option>
               ))}
             </select>

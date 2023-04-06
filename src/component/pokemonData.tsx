@@ -12,6 +12,8 @@ type PokemonCardProps = {
   pokemonData2: any;
   cardData: any;
   cardData2: any;
+  pokemonBaseData: any;
+  pokemonBaseData2: any;
 };
 
 export function PokemonPreview({ number, pokemonData }: ComparePokemonProps) {
@@ -29,6 +31,8 @@ export function PokemonCard({
   pokemonData2,
   cardData,
   cardData2,
+  pokemonBaseData,
+  pokemonBaseData2,
 }: PokemonCardProps) {
   const [selectedCard, setSelectedCard] = useState(1);
   const handleCardClick = (index: number) => {
@@ -43,7 +47,7 @@ export function PokemonCard({
     name: cardData.data[selectedCard].name,
     height: pokemonData.height,
     weight: pokemonData.weight,
-    hp: parseInt(cardData.data[selectedCard].hp.replace(/\D/g, "")),
+    hp: pokemonBaseData.base.HP,
     attack1: parseInt(
       cardData.data[selectedCard].attacks[0].damage.replace(/\D/g, "")
     ),
@@ -53,11 +57,11 @@ export function PokemonCard({
             cardData.data[selectedCard].attacks[1].damage.replace(/\D/g, "")
           )
         : 0,
-    resistance: cardData.data[selectedCard]?.resistances?.length
-      ? parseInt(
-          cardData.data[selectedCard].resistances[0].value.replace(/\D/g, "")
-        )
-      : 0,
+    attack3: pokemonBaseData.base.Attack,
+    attack4: pokemonBaseData.base["Sp. Attack"],
+    defense1: pokemonBaseData.base.Defense,
+    defense2: pokemonBaseData.base["Sp. Defense"],
+    speed: pokemonBaseData.base.Speed,
     image: cardData.data[selectedCard].images.large,
   };
 
@@ -65,7 +69,7 @@ export function PokemonCard({
     name: cardData2.data[selectedCard2].name,
     height: pokemonData2.height,
     weight: pokemonData2.weight,
-    hp: parseInt(cardData2.data[selectedCard2].hp.replace(/\D/g, "")),
+    hp: pokemonBaseData2.base.HP,
     attack1: parseInt(
       cardData2.data[selectedCard2].attacks[0].damage.replace(/\D/g, "")
     ),
@@ -75,11 +79,11 @@ export function PokemonCard({
             cardData2.data[selectedCard2].attacks[1].damage.replace(/\D/g, "")
           )
         : 0,
-    resistance: cardData2.data[selectedCard2]?.resistances?.length
-      ? parseInt(
-          cardData2.data[selectedCard2].resistances[0].value.replace(/\D/g, "")
-        )
-      : 0,
+    attack3: pokemonBaseData2.base.Attack,
+    attack4: pokemonBaseData2.base["Sp. Attack"],
+    defense1: pokemonBaseData2.base.Defense,
+    defense2: pokemonBaseData2.base["Sp. Defense"],
+    speed: pokemonBaseData2.base.Speed,
     image: cardData2.data[selectedCard2].images.large,
   };
 
@@ -93,9 +97,13 @@ export function PokemonCard({
     xAxis: {
       categories: [
         "HP",
-        "Attack1",
-        "Attack2",
-        "Resistance",
+        "Normal Attack",
+        "Normal Attack 2",
+        "Special Attack",
+        "Special Attack 2",
+        "Defense",
+        "Special Defense",
+        "Speed",
         "Height",
         "Weight",
       ],
@@ -124,7 +132,11 @@ export function PokemonCard({
           summaryData2.hp,
           summaryData2.attack1,
           summaryData2.attack2,
-          summaryData2.resistance,
+          summaryData2.attack3,
+          summaryData1.attack4,
+          summaryData2.defense1,
+          summaryData2.defense2,
+          summaryData2.speed,
           summaryData2.height,
           summaryData2.weight,
         ],
@@ -136,7 +148,11 @@ export function PokemonCard({
           summaryData1.hp,
           summaryData1.attack1,
           summaryData1.attack2,
-          summaryData1.resistance,
+          summaryData1.attack3,
+          summaryData1.attack4,
+          summaryData1.defense1,
+          summaryData1.defense2,
+          summaryData1.speed,
           summaryData1.height,
           summaryData1.weight,
         ],
