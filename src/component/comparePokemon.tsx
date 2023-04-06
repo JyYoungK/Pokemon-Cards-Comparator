@@ -34,9 +34,9 @@ function comparePokemon({
     >
       <div className="text-2xl font-bold">Pokemon {pokemonNumber}</div>
       <div>
-        <div className="text-lg font-semibold">
+        {/* <div className="text-lg font-semibold">
           Selected Pokemon: {selectedPokemon}
-        </div>
+        </div> */}
         <div className="flex flex-col justify-center text-center md:flex-row md:space-x-8">
           <div>
             <h1 className="">Generation</h1>

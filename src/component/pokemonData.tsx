@@ -19,7 +19,7 @@ export function PokemonPreview({ number, pokemonData }: ComparePokemonProps) {
     <img
       src={pokemonData?.sprites?.other["official-artwork"].front_default}
       alt="Pokemon Preview"
-      className={`h-0 w-0 lg:h-24 lg:w-24 ${number === 1 ? "mr-6" : "ml-6"}`}
+      className={`h-0 w-0 lg:h-20 lg:w-20 ${number === 1 ? "mr-6" : "ml-6"}`}
     />
   );
 }
