@@ -187,7 +187,7 @@ export function PokemonCard({
           </div>
         ) : (
           <div className={`flex h-3/4 w-full flex-col justify-evenly`}>
-            <div className="flex h-full w-full flex-row">
+            <div className="flex h-1/2 w-full flex-row">
               <div className="md:h-full md:w-1/4">
                 <img
                   src={cardData.data[selectedCard].images.small}
@@ -203,7 +203,9 @@ export function PokemonCard({
                 />
               </div>
             </div>
-            <HighchartsReact highcharts={Highcharts} options={configObj} />
+            <div className="flex h-1/2 w-full">
+              <HighchartsReact highcharts={Highcharts} options={configObj} />
+            </div>
           </div>
         )}
         <div className="grid h-1/4 w-full grid-cols-2">
