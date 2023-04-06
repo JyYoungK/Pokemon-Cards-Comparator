@@ -28,7 +28,7 @@ function comparePokemon({
 }: ComparePokemonProps) {
   return (
     <div
-      className={`flex flex-col text-center ${
+      className={`flex w-full flex-col text-center ${
         pokemonNumber === "1" ? "bg-red-500" : "bg-blue-500"
       }`}
     >

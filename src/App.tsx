@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import "./App.css";
 import { PokemonDataType, generation1 } from "./assets/data/generation";
 import ComparePokemon from "./component/comparePokemon";
-import fetchPokemon from "./component/pokemonAPI";
-import PokemonData from "./component/pokemonData";
+import { fetchPokemon, fetchPokemonCard } from "./component/pokemonAPI";
+import { PokemonPreview, PokemonCard } from "./component/pokemonData";
 
 function App() {
   // List of generations
@@ -38,7 +38,8 @@ function App() {
   const [type, setType] = useState<string>("Normal");
   const [filteredPokemon, setFilteredPokemon] = useState<PokemonDataType[]>([]);
   const [selectedPokemon, setSelectedPokemon] = useState("Pidgey");
-  const [pokemonData, setPokemonData] = useState<Object>("");
+  const [pokemonData, setPokemonData] = useState<Object>({});
+  const [pokemonCardData, setPokemonCardData] = useState<Object>({});
 
   // State variables to store the selected generation and type
   const [generation2, setGeneration2] = useState<string>("1");
@@ -47,7 +48,13 @@ function App() {
     []
   );
   const [selectedPokemon2, setSelectedPokemon2] = useState("Pidgey");
-  const [pokemonData2, setPokemonData2] = useState<Object>("");
+  const [pokemonData2, setPokemonData2] = useState<Object>({});
+  const [pokemonCardData2, setPokemonCardData2] = useState<Object>({});
+
+  useEffect(() => {
+    pokemonPreview();
+    comparePokemon();
+  }, [selectedPokemon, selectedPokemon2]);
 
   useEffect(() => {
     const filtered = filterPokemon(generation, type);
@@ -102,7 +109,7 @@ function App() {
     }
   };
 
-  async function comparePokemon() {
+  async function pokemonPreview() {
     try {
       const fetchPokemonData = await fetchPokemon(
         selectedPokemon.toLocaleLowerCase()
@@ -113,6 +120,22 @@ function App() {
 
       setPokemonData(fetchPokemonData);
       setPokemonData2(fetchPokemonData2);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async function comparePokemon() {
+    try {
+      const fetchPokemonCardData = await fetchPokemonCard(
+        selectedPokemon.toLocaleLowerCase()
+      );
+      const fetchPokemonCardData2 = await fetchPokemonCard(
+        selectedPokemon2.toLocaleLowerCase()
+      );
+
+      setPokemonCardData(fetchPokemonCardData);
+      setPokemonCardData2(fetchPokemonCardData2);
     } catch (error) {
       console.error(error);
     }
@@ -152,9 +175,9 @@ function App() {
   // };
 
   return (
-    <div className="App h-screen w-full items-center justify-center border-4 border-black text-center">
-      <div className="relative">
-        <div className="grid grid-cols-2 border-4 border-black">
+    <div className="App flex h-screen w-full flex-col items-center justify-center border-4 border-black text-center">
+      <div className="relative w-full">
+        <div className="flex w-full flex-row border-4 border-black">
           <ComparePokemon
             pokemonNumber={"1"}
             handleGenerationChange={handleGenerationChange}
@@ -179,17 +202,17 @@ function App() {
             selectedPokemon={selectedPokemon2}
             setSelectedPokemon={setSelectedPokemon2}
           />
-          <button
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform bg-purple-500 p-4 text-2xl text-white hover:scale-105 hover:bg-purple-700 hover:text-pink-500"
-            onClick={comparePokemon}
-          >
-            Compare!
-          </button>
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
+            <div className="flex flex-row">
+              <PokemonPreview number={1} pokemonData={pokemonData} />
+              <PokemonPreview number={2} pokemonData={pokemonData2} />
+            </div>
+          </div>
         </div>
       </div>
-      <div className="flex flex-row justify-evenly border-4 border-black">
-        <PokemonData number={1} pokemonData={pokemonData} />
-        <PokemonData number={2} pokemonData={pokemonData2} />
+      <div className="flex h-full w-full flex-row justify-stretch">
+        <PokemonCard number={1} cardData={pokemonCardData} />
+        <PokemonCard number={2} cardData={pokemonCardData2} />
       </div>
     </div>
   );
