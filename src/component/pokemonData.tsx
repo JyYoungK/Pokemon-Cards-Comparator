@@ -19,7 +19,7 @@ export function PokemonPreview({ number, pokemonData }: ComparePokemonProps) {
     <img
       src={pokemonData?.sprites?.other["official-artwork"].front_default}
       alt="Pokemon Preview"
-      className={`h-24 w-24 ${number === 1 ? "mr-6" : "ml-6"}`}
+      className={`h-0 w-0 lg:h-24 lg:w-24 ${number === 1 ? "mr-6" : "ml-6"}`}
     />
   );
 }
@@ -147,17 +147,6 @@ export function PokemonCard({
 
   return (
     <div className={`flex h-full w-full flex-col  `}>
-      {/* {number === 1 && (
-        <ul className="grid grid-cols-5">
-        {data.map((card: any, index: number) => (
-            <li key={index}>
-            <button onClick={() => handleCardClick(index)}>
-            {index + 1}
-            </button>
-            </li>
-            ))}
-            </ul>
-          )} */}
       <div className="flex h-full w-full flex-col">
         <div className={`flex h-3/4 w-full flex-row justify-evenly`}>
           <div className="card h-full w-1/4">

@@ -121,22 +121,10 @@ export const generation1: PokemonDataType[] = [
     type2: null,
   },
   {
-    id: "Rattata-Alolan",
-    name: "Rattata",
-    type1: "Dark",
-    type2: "Normal",
-  },
-  {
     id: "#0020",
     name: "Raticate",
     type1: "Normal",
     type2: null,
-  },
-  {
-    id: "Raticate-Alolan",
-    name: "Raticate",
-    type1: "Dark",
-    type2: "Normal",
   },
   {
     id: "#0021",

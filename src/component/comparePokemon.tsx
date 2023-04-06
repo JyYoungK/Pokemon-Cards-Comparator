@@ -37,8 +37,8 @@ function comparePokemon({
         <div className="text-lg font-semibold">
           Selected Pokemon: {selectedPokemon}
         </div>
-        <div className="flex flex-row justify-center text-center">
-          <div className="w-[150px]">
+        <div className="flex flex-col justify-center text-center md:flex-row md:space-x-8">
+          <div>
             <h1 className="">Generation</h1>
             <select onChange={handleGenerationChange} value={generation}>
               {generations.map((gen) => (
@@ -48,7 +48,7 @@ function comparePokemon({
               ))}
             </select>
           </div>
-          <div className="w-[120px]">
+          <div>
             <h1>Type</h1>
             <select onChange={handleTypeChange} value={type}>
               {types.map((t) => (
@@ -58,7 +58,7 @@ function comparePokemon({
               ))}
             </select>
           </div>
-          <div className="w-[180px]">
+          <div>
             <h1>Name</h1>
             <select
               value={selectedPokemon}

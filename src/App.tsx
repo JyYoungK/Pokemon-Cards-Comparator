@@ -4,10 +4,12 @@ import { PokemonDataType, generation1 } from "./assets/data/generation";
 import ComparePokemon from "./component/comparePokemon";
 import { fetchPokemon, fetchPokemonCard } from "./component/pokemonAPI";
 import { PokemonPreview, PokemonCard } from "./component/pokemonData";
+import loading from "./assets/loading.gif";
 
 function App() {
   // List of generations
-  const generations = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  // const generations = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  const generations = [1];
 
   // List of Pokemon types
   const types = [
@@ -73,7 +75,7 @@ function App() {
   useEffect(() => {
     pokemonPreview();
     comparePokemon();
-  }, [selectedPokemon, selectedPokemon2]);
+  }, [generation, generation2, type, type2, selectedPokemon, selectedPokemon2]);
 
   useEffect(() => {
     const filtered = filterPokemon(generation, type);
@@ -89,25 +91,39 @@ function App() {
   const handleGenerationChange = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
-    setGeneration(event.target.value);
+    const selectedGen = event.target.value;
+    setGeneration(selectedGen);
+    setSelectedPokemon(filterPokemon(generation, selectedGen)[0].name);
+    pokemonPreview();
+    comparePokemon();
   };
 
   // Handler function for when the generation dropdown is changed
   const handleGenerationChange2 = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
-    setGeneration2(event.target.value);
+    const selectedGen = event.target.value;
+    setGeneration2(selectedGen);
+    setSelectedPokemon2(filterPokemon(generation2, selectedGen)[0].name);
+    pokemonPreview();
+    comparePokemon();
   };
 
   // Handler function for when the type dropdown is changed
   const handleTypeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedType = event.target.value;
     setType(selectedType);
+    setSelectedPokemon(filterPokemon(generation, selectedType)[0].name);
+    pokemonPreview();
+    comparePokemon();
   };
 
   const handleTypeChange2 = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedType = event.target.value;
     setType2(selectedType);
+    setSelectedPokemon2(filterPokemon(generation2, selectedType)[0].name);
+    pokemonPreview();
+    comparePokemon();
   };
 
   const filterPokemon = (gen: string, t: string): PokemonDataType[] => {
@@ -221,7 +237,7 @@ function App() {
             selectedPokemon={selectedPokemon2}
             setSelectedPokemon={setSelectedPokemon2}
           />
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
+          <div className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 transform sm:block">
             <div className="flex flex-row">
               <PokemonPreview number={1} pokemonData={pokemonData} />
               <PokemonPreview number={2} pokemonData={pokemonData2} />
@@ -229,7 +245,7 @@ function App() {
           </div>
         </div>
       </div>
-      {showCard && (
+      {showCard ? (
         <div className="flex h-full w-full flex-row justify-stretch">
           <PokemonCard
             pokemonData={pokemonData}
@@ -237,6 +253,10 @@ function App() {
             cardData={pokemonCardData}
             cardData2={pokemonCardData2}
           />
+        </div>
+      ) : (
+        <div className="flex h-full w-full items-center justify-center text-center">
+          <img src={loading} alt="loading" />
         </div>
       )}
     </div>
