@@ -31,17 +31,27 @@ function App() {
     "Fairy",
   ];
 
+  const [showCard, setShowCard] = useState(false);
   // <------------------------------------ Find ------------------------------------ >
 
-  // State variables to store the selected generation and type
+  // Pokemon1 generation and type
   const [generation, setGeneration] = useState<string>("1");
   const [type, setType] = useState<string>("Normal");
   const [filteredPokemon, setFilteredPokemon] = useState<PokemonDataType[]>([]);
   const [selectedPokemon, setSelectedPokemon] = useState("Pidgey");
   const [pokemonData, setPokemonData] = useState<Object>({});
-  const [pokemonCardData, setPokemonCardData] = useState<Object>({});
+  const [pokemonCardData, setPokemonCardData] = useState<Object>({
+    // name: "",
+    // height: 0,
+    // weight: 0,
+    // hp: 0,
+    // attack1: 0,
+    // attack2: 0,
+    // resistance: 0,
+    // image: "",
+  });
 
-  // State variables to store the selected generation and type
+  // Pokemon2 generation and type
   const [generation2, setGeneration2] = useState<string>("1");
   const [type2, setType2] = useState<string>("Normal");
   const [filteredPokemon2, setFilteredPokemon2] = useState<PokemonDataType[]>(
@@ -49,7 +59,16 @@ function App() {
   );
   const [selectedPokemon2, setSelectedPokemon2] = useState("Pidgey");
   const [pokemonData2, setPokemonData2] = useState<Object>({});
-  const [pokemonCardData2, setPokemonCardData2] = useState<Object>({});
+  const [pokemonCardData2, setPokemonCardData2] = useState<Object>({
+    // name: "",
+    // height: 0,
+    // weight: 0,
+    // hp: 0,
+    // attack1: 0,
+    // attack2: 0,
+    // resistance: 0,
+    // image: "",
+  });
 
   useEffect(() => {
     pokemonPreview();
@@ -133,7 +152,7 @@ function App() {
       const fetchPokemonCardData2 = await fetchPokemonCard(
         selectedPokemon2.toLocaleLowerCase()
       );
-
+      setShowCard(true);
       setPokemonCardData(fetchPokemonCardData);
       setPokemonCardData2(fetchPokemonCardData2);
     } catch (error) {
@@ -210,10 +229,16 @@ function App() {
           </div>
         </div>
       </div>
-      <div className="flex h-full w-full flex-row justify-stretch">
-        <PokemonCard number={1} cardData={pokemonCardData} />
-        <PokemonCard number={2} cardData={pokemonCardData2} />
-      </div>
+      {showCard && (
+        <div className="flex h-full w-full flex-row justify-stretch">
+          <PokemonCard
+            pokemonData={pokemonData}
+            pokemonData2={pokemonData2}
+            cardData={pokemonCardData}
+            cardData2={pokemonCardData2}
+          />
+        </div>
+      )}
     </div>
   );
 }

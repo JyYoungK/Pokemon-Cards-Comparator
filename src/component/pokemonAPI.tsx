@@ -2,6 +2,7 @@ export async function fetchPokemon(selectedPokemon: string) {
   const url = `https://pokeapi.co/api/v2/pokemon/${selectedPokemon}`;
   const response = await fetch(url);
   if (!response.ok) {
+    alert("Could not load this pokemon");
     throw new Error(`HTTP error! status: ${response.status}`);
   }
   const data = await response.json();
@@ -12,6 +13,7 @@ export async function fetchPokemonCard(selectedPokemon: string) {
   const url = `https://api.pokemontcg.io/v2/cards?q=name:${selectedPokemon}`;
   const response = await fetch(url);
   if (!response.ok) {
+    alert("Could not load this pokemon");
     throw new Error(`HTTP error! status: ${response.status}`);
   }
   const data = await response.json();
