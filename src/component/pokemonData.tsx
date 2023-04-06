@@ -191,14 +191,14 @@ export function PokemonCard({
               <div className="h-full w-full">
                 <img
                   src={cardData.data[selectedCard].images.small}
-                  className="h-full"
+                  className="h-full w-full"
                   alt="Selected card"
                 />
               </div>
               <div className="h-full w-full">
                 <img
                   src={cardData2.data[selectedCard2].images.small}
-                  className="h-full"
+                  className="h-full w-full"
                   alt="Selected card"
                 />
               </div>
