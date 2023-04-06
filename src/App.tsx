@@ -43,9 +43,9 @@ function App() {
   ];
 
   const [showCard, setShowCard] = useState(false);
-  // <------------------------------------ Find ------------------------------------ >
+  // // <------------------------------------ Find ------------------------------------ >
 
-  // Pokemon1 generation and type
+  // // Pokemon1 generation and type
   const [generation, setGeneration] = useState<string>("1");
   const [type, setType] = useState<string>("Normal");
   const [filteredPokemon, setFilteredPokemon] = useState<PokemonDataType[]>([]);

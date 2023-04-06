@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
+import { useMediaQuery } from "react-responsive";
 
 type ComparePokemonProps = {
   number: number;
@@ -34,6 +35,8 @@ export function PokemonCard({
   pokemonBaseData,
   pokemonBaseData2,
 }: PokemonCardProps) {
+  const isMd = useMediaQuery({ minWidth: 768 });
+
   const [selectedCard, setSelectedCard] = useState(1);
   const handleCardClick = (index: number) => {
     setSelectedCard(index);
@@ -164,23 +167,45 @@ export function PokemonCard({
   return (
     <div className={`flex h-full w-full flex-col  `}>
       <div className="flex h-full w-full flex-col">
-        <div className={`flex h-3/4 w-full flex-row justify-evenly`}>
-          <div className="card h-full w-1/4">
-            <img
-              src={cardData.data[selectedCard].images.small}
-              className="h-full"
-              alt="Selected card"
-            />
+        {isMd ? (
+          <div className={`flex h-3/4 w-full flex-row justify-evenly`}>
+            <div className="md:h-full md:w-1/4">
+              <img
+                src={cardData.data[selectedCard].images.small}
+                className="h-full"
+                alt="Selected card"
+              />
+            </div>
+            <HighchartsReact highcharts={Highcharts} options={configObj} />
+            <div className="md:h-full md:w-1/4">
+              <img
+                src={cardData2.data[selectedCard2].images.small}
+                className="h-full"
+                alt="Selected card"
+              />
+            </div>
           </div>
-          <HighchartsReact highcharts={Highcharts} options={configObj} />
-          <div className="card h-full w-1/4">
-            <img
-              src={cardData2.data[selectedCard2].images.small}
-              className="h-full"
-              alt="Selected card"
-            />
+        ) : (
+          <div className={`flex h-3/4 w-full flex-row justify-evenly`}>
+            <div className="flex h-full w-full flex-row">
+              <div className="md:h-full md:w-1/4">
+                <img
+                  src={cardData.data[selectedCard].images.small}
+                  className="h-full"
+                  alt="Selected card"
+                />
+              </div>
+              <div className="md:h-full md:w-1/4">
+                <img
+                  src={cardData2.data[selectedCard2].images.small}
+                  className="h-full"
+                  alt="Selected card"
+                />
+              </div>
+            </div>
+            <HighchartsReact highcharts={Highcharts} options={configObj} />
           </div>
-        </div>
+        )}
         <div className="grid h-1/4 w-full grid-cols-2">
           <ul className="grid h-full w-full grid-cols-5 border-2 border-white text-2xl text-white">
             {cardData.data.slice(0, 15).map((card: any, index: number) => (
