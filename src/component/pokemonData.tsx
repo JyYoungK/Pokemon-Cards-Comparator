@@ -169,7 +169,7 @@ export function PokemonCard({
       <div className="flex h-full w-full flex-col">
         {isMd ? (
           <div className={`flex h-3/4 w-full flex-row justify-evenly`}>
-            <div className="md:h-full md:w-1/4">
+            <div className="h-full w-1/4">
               <img
                 src={cardData.data[selectedCard].images.small}
                 className="h-full"
@@ -177,7 +177,7 @@ export function PokemonCard({
               />
             </div>
             <HighchartsReact highcharts={Highcharts} options={configObj} />
-            <div className="md:h-full md:w-1/4">
+            <div className="h-full w-1/4">
               <img
                 src={cardData2.data[selectedCard2].images.small}
                 className="h-full"
@@ -188,14 +188,14 @@ export function PokemonCard({
         ) : (
           <div className={`flex h-3/4 w-full flex-col justify-evenly`}>
             <div className="flex h-1/2 w-full flex-row">
-              <div className="md:h-full md:w-1/4">
+              <div className="h-full w-full">
                 <img
                   src={cardData.data[selectedCard].images.small}
                   className="h-full"
                   alt="Selected card"
                 />
               </div>
-              <div className="md:h-full md:w-1/4">
+              <div className="h-full w-full">
                 <img
                   src={cardData2.data[selectedCard2].images.small}
                   className="h-full"
