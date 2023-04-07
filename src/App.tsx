@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 import {
-  PokemonDataType,
   generationI,
   generationII,
   generationIII,
@@ -14,6 +13,7 @@ import ComparePokemon from "./component/comparePokemon";
 import { fetchPokemon, fetchPokemonCard } from "./component/pokemonAPI";
 import { PokemonPreview, PokemonCard } from "./component/pokemonData";
 import loading from "./assets/loading.gif";
+import { PokemonDataType } from "./types";
 
 function App() {
   // List of generations
@@ -62,6 +62,7 @@ function App() {
     // resistance: 0,
     // image: "",
   });
+  const [loadingCard, setLoadingCard] = useState(false);
 
   // Pokemon2 generation and type
   const [generation2, setGeneration2] = useState<string>("1");
@@ -82,11 +83,20 @@ function App() {
     // resistance: 0,
     // image: "",
   });
+  const [loadingCard2, setLoadingCard2] = useState(false);
 
   useEffect(() => {
-    pokemonPreview();
-    comparePokemon();
-  }, [generation, generation2, type, type2, selectedPokemon, selectedPokemon2]);
+    comparePokemon(1);
+    comparePokemon(2);
+  }, []);
+
+  useEffect(() => {
+    comparePokemon(1);
+  }, [generation, type, selectedPokemon]);
+
+  useEffect(() => {
+    comparePokemon(2);
+  }, [generation2, type2, selectedPokemon2]);
 
   useEffect(() => {
     setPokemonBaseData(filterPokemon(generation, type)[0]);
@@ -108,8 +118,7 @@ function App() {
     setGeneration(selectedGen);
     setSelectedPokemon(filterPokemon(selectedGen, type)[0].name.english);
     setPokemonBaseData(filterPokemon(selectedGen, type)[0]);
-    pokemonPreview();
-    comparePokemon();
+    comparePokemon(1);
   };
 
   // Handler function for when the generation dropdown is changed
@@ -120,8 +129,7 @@ function App() {
     setGeneration2(selectedGen);
     setSelectedPokemon2(filterPokemon(selectedGen, type2)[0].name.english);
     setPokemonBaseData2(filterPokemon(selectedGen, type2)[0]);
-    pokemonPreview();
-    comparePokemon();
+    comparePokemon(2);
   };
 
   // Handler function for when the type dropdown is changed
@@ -130,8 +138,7 @@ function App() {
     setType(selectedType);
     setSelectedPokemon(filterPokemon(generation, selectedType)[0].name.english);
     setPokemonBaseData(filterPokemon(generation, selectedType)[0]);
-    pokemonPreview();
-    comparePokemon();
+    comparePokemon(1);
   };
 
   const handleTypeChange2 = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -141,8 +148,7 @@ function App() {
       filterPokemon(generation2, selectedType)[0].name.english
     );
     setPokemonBaseData2(filterPokemon(generation2, selectedType)[0]);
-    pokemonPreview();
-    comparePokemon();
+    comparePokemon(2);
   };
 
   const filterPokemon = (gen: string, t: string): PokemonDataType[] => {
@@ -174,35 +180,34 @@ function App() {
     }
   };
 
-  async function pokemonPreview() {
-    try {
-      const fetchPokemonData = await fetchPokemon(
-        selectedPokemon.toLocaleLowerCase()
-      );
-      const fetchPokemonData2 = await fetchPokemon(
-        selectedPokemon2.toLocaleLowerCase()
-      );
-
-      setPokemonData(fetchPokemonData);
-      setPokemonData2(fetchPokemonData2);
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  async function comparePokemon() {
-    try {
-      const fetchPokemonCardData = await fetchPokemonCard(
-        selectedPokemon.toLocaleLowerCase()
-      );
-      const fetchPokemonCardData2 = await fetchPokemonCard(
-        selectedPokemon2.toLocaleLowerCase()
-      );
-      setShowCard(true);
-      setPokemonCardData(fetchPokemonCardData);
-      setPokemonCardData2(fetchPokemonCardData2);
-    } catch (error) {
-      console.error(error);
+  async function comparePokemon(num: number) {
+    if (num === 1) {
+      setLoadingCard(true);
+      try {
+        const [fetchPokemonData, fetchPokemonCardData] = await Promise.all([
+          fetchPokemon(selectedPokemon.toLocaleLowerCase()),
+          fetchPokemonCard(selectedPokemon.toLocaleLowerCase()),
+        ]);
+        setPokemonData(fetchPokemonData);
+        setPokemonCardData(fetchPokemonCardData);
+        setLoadingCard(false);
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      setLoadingCard2(true);
+      try {
+        const [fetchPokemonData, fetchPokemonCardData] = await Promise.all([
+          fetchPokemon(selectedPokemon2.toLocaleLowerCase()),
+          fetchPokemonCard(selectedPokemon2.toLocaleLowerCase()),
+        ]);
+        setShowCard(true);
+        setPokemonData2(fetchPokemonData);
+        setPokemonCardData2(fetchPokemonCardData);
+        setLoadingCard2(false);
+      } catch (error) {
+        console.error(error);
+      }
     }
   }
 
@@ -253,6 +258,8 @@ function App() {
             cardData2={pokemonCardData2}
             pokemonBaseData={pokemonBaseData}
             pokemonBaseData2={pokemonBaseData2}
+            loadingCard={loadingCard}
+            loadingCard2={loadingCard2}
           />
         </div>
       ) : (

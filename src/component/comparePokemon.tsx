@@ -1,5 +1,5 @@
 import React from "react";
-import { PokemonDataType } from "../assets/data/generation";
+import { PokemonDataType } from "../types";
 
 type ComparePokemonProps = {
   pokemonNumber: string;

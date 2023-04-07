@@ -15,6 +15,8 @@ type PokemonCardProps = {
   cardData2: any;
   pokemonBaseData: any;
   pokemonBaseData2: any;
+  loadingCard: boolean;
+  loadingCard2: boolean;
 };
 
 export function PokemonPreview({ number, pokemonData }: ComparePokemonProps) {
@@ -34,14 +36,16 @@ export function PokemonCard({
   cardData2,
   pokemonBaseData,
   pokemonBaseData2,
+  loadingCard,
+  loadingCard2,
 }: PokemonCardProps) {
   const isMd = useMediaQuery({ minWidth: 768 });
 
-  const [selectedCard, setSelectedCard] = useState(1);
+  const [selectedCard, setSelectedCard] = useState(0);
   const handleCardClick = (index: number) => {
     setSelectedCard(index);
   };
-  const [selectedCard2, setSelectedCard2] = useState(1);
+  const [selectedCard2, setSelectedCard2] = useState(0);
   const handleCardClick2 = (index: number) => {
     setSelectedCard2(index);
   };
@@ -169,41 +173,77 @@ export function PokemonCard({
       <div className="flex h-full w-full flex-col">
         {isMd ? (
           <div className={`flex h-3/4 w-full flex-row justify-evenly`}>
-            <div className="md:h-full md:w-1/4">
+            <div className="relative flex h-full w-1/4 items-center justify-center text-center">
+              {loadingCard && (
+                <div className="lds-ring absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
+                  <div />
+                  <div />
+                  <div />
+                  <div />
+                </div>
+              )}
               <img
                 src={cardData.data[selectedCard].images.small}
-                className="h-full"
+                className={`h-full ${loadingCard ? "opacity-50" : ""}`}
                 alt="Selected card"
               />
             </div>
             <HighchartsReact highcharts={Highcharts} options={configObj} />
-            <div className="md:h-full md:w-1/4">
+            <div className="relative flex h-full w-1/4 items-center justify-center text-center">
+              {loadingCard2 && (
+                <div className="lds-ring absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
+                  <div />
+                  <div />
+                  <div />
+                  <div />
+                </div>
+              )}
               <img
                 src={cardData2.data[selectedCard2].images.small}
-                className="h-full"
+                className={`h-full ${loadingCard2 ? "opacity-50" : ""}`}
                 alt="Selected card"
               />
             </div>
           </div>
         ) : (
-          <div className={`flex h-3/4 w-full flex-row justify-evenly`}>
-            <div className="flex h-full w-full flex-row">
-              <div className="md:h-full md:w-1/4">
+          <div className={`flex h-3/4 w-full flex-col justify-evenly`}>
+            <div className="flex h-1/2 w-full flex-row">
+              <div className="relative flex h-full w-full">
+                {loadingCard && (
+                  <div className="lds-ring absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
+                    <div />
+                    <div />
+                    <div />
+                    <div />
+                  </div>
+                )}
                 <img
                   src={cardData.data[selectedCard].images.small}
-                  className="h-full"
+                  className={`h-full w-full ${loadingCard ? "opacity-50" : ""}`}
                   alt="Selected card"
                 />
               </div>
-              <div className="md:h-full md:w-1/4">
+              <div className="relative flex h-full w-full">
+                {loadingCard2 && (
+                  <div className="lds-ring absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
+                    <div />
+                    <div />
+                    <div />
+                    <div />
+                  </div>
+                )}
                 <img
                   src={cardData2.data[selectedCard2].images.small}
-                  className="h-full"
+                  className={`h-full w-full ${
+                    loadingCard2 ? "opacity-50" : ""
+                  }`}
                   alt="Selected card"
                 />
               </div>
             </div>
-            <HighchartsReact highcharts={Highcharts} options={configObj} />
+            <div className="flex h-1/2 w-full">
+              <HighchartsReact highcharts={Highcharts} options={configObj} />
+            </div>
           </div>
         )}
         <div className="grid h-1/4 w-full grid-cols-2">

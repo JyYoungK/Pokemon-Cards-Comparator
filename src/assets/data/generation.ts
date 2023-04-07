@@ -1,14 +1,4 @@
-export interface PokemonDataType {
-  id: number;
-  name: {
-    english: string;
-    japanese: string;
-    chinese: string;
-    french: string;
-  };
-  type: object;
-  base: object;
-}
+import { PokemonDataType } from "../../types";
 
 export const generationI: PokemonDataType[] = [
   {
