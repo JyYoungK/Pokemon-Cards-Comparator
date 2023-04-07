@@ -101,38 +101,86 @@ export function PokemonCard({
     title: {
       text: `${summaryData1.name} vs ${summaryData2.name}`,
     },
-    xAxis: {
-      categories: [
-        "HP",
-        "Normal Attack",
-        "Normal Attack 2",
-        "Special Attack",
-        "Special Attack 2",
-        "Defense",
-        "Special Defense",
-        "Speed",
-        "Height",
-        "Weight",
-      ],
-    },
-    yAxis: {
-      min: 0,
-      title: {
-        text: "",
+    // subtitle: {
+    //   text:
+    //     "Source: <a " +
+    //     'href="https://countryeconomy.com/demography/population-structure/somalia"' +
+    //     'target="_blank">countryeconomy.com</a>',
+    //   align: "left",
+    // },
+    // accessibility: {
+    //   point: {
+    //     valueDescriptionFormat: "{index}. Age {xDescription}, {value}%.",
+    //   },
+    // },
+    xAxis: [
+      {
+        categories: [
+          "HP",
+          "Normal Attack",
+          "Normal Attack 2",
+          "Special Attack",
+          "Special Attack 2",
+          "Defense",
+          "Special Defense",
+          "Speed",
+          "Height",
+          "Weight",
+        ],
+        reversed: false,
+        labels: {
+          step: 1,
+        },
       },
-    },
-    legend: {
-      reversed: true,
+      {
+        // mirror axis on right side
+        opposite: true,
+        reversed: false,
+        categories: [
+          "HP",
+          "Normal Attack",
+          "Normal Attack 2",
+          "Special Attack",
+          "Special Attack 2",
+          "Defense",
+          "Special Defense",
+          "Speed",
+          "Height",
+          "Weight",
+        ],
+        linkedTo: 0,
+        labels: {
+          step: 1,
+        },
+      },
+    ],
+    yAxis: {
+      title: {
+        text: null,
+      },
     },
     plotOptions: {
-      bar: {
-        showInLegend: true,
-      },
       series: {
         stacking: "normal",
       },
     },
     series: [
+      {
+        name: summaryData1.name,
+        data: [
+          -summaryData1.hp,
+          -summaryData1.attack1,
+          -summaryData1.attack2,
+          -summaryData1.attack3,
+          -summaryData1.attack4,
+          -summaryData1.defense1,
+          -summaryData1.defense2,
+          -summaryData1.speed,
+          -summaryData1.height,
+          -summaryData1.weight,
+        ],
+        color: "rgb(248 113 113)", // red color
+      },
       {
         name: summaryData2.name,
         data: [
@@ -148,22 +196,6 @@ export function PokemonCard({
           summaryData2.weight,
         ],
         color: "rgb(96 165 250)", // blue color
-      },
-      {
-        name: summaryData1.name,
-        data: [
-          summaryData1.hp,
-          summaryData1.attack1,
-          summaryData1.attack2,
-          summaryData1.attack3,
-          summaryData1.attack4,
-          summaryData1.defense1,
-          summaryData1.defense2,
-          summaryData1.speed,
-          summaryData1.height,
-          summaryData1.weight,
-        ],
-        color: "rgb(248 113 113)", // red color
       },
     ],
   };
